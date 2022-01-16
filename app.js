@@ -30,3 +30,16 @@ const server = http.createServer((req, res)=>{
 // Los paramametros que toma son el puerto, el nombre del host
 // por default es localhost
 server.listen(3000);
+
+// esto lo que hace es iniciar un event Loop manejado por node
+// Esto lo mantiene corriendo siempre y cuando haya eventListeners registrados en el event Loop
+
+// toda nuestra aplicacion es manejada por este evenLoop, node usa el aproach
+// de evenLoop no solo para el server sino para muchas otras cosas mas
+
+// Esto es importanto ya que node es single thrad, es decir que todos los proceso en node usan el mismo hilo
+// sin embargo con node podemos manejar miles de request
+// esto sucede porque solo se ejecuta codig cuando un cierto event curre, dejando libre el thread cuando no ocurre
+
+// con process.exit() nos desregistramos del evenLoop cerrando el server si no hay otros listeners
+
