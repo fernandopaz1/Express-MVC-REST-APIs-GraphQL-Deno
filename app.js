@@ -3,6 +3,7 @@
 // por ejemple en este caso usa el core module http en vez de 
 // importar un archivo con ese nombre
 const http = require('http');
+const fs = require('fs');
 
 // creteServer toma un request listener como argumento
 // es una funccion que se ejecuta por cada request
@@ -20,15 +21,61 @@ const http = require('http');
 // que debemos guardar en una variable
 
 const server = http.createServer((req, res)=>{
-    console.log(req.url, req.method, req.headers)
+    const url = req.url
+    const method = req.method
 
-    // Podemos setear a tipo content y que retorne un html
+    if(url === '/'){
+        // Podemos setear a tipo content y que retorne un html
+        res.setHeader('Content-Type', 'text/html')
+        res.write('<html>');
+        res.write('<head><title>Enter Message</title></head>');
+        res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submint">Submit</button></form></body>')
+        res.write('</html>');
+
+        // con esto deimos que ya no escribimos en la respuesta
+        // y lo que escribimos se manda al cliente
+        return res.end();
+    }
+
+
+    if(url === '/message' && method === 'POST'){
+        // los request son leidos por node en chunks, podemos empezar a leer la info del request
+        // sin que haya llegado en un 100%. El request viene en un stream
+
+        // no podemos asumir que todo el request va a estar disponbible de entrada para eso+
+        // debemos trabajar con buffers
+        // para eso vamos a usar un even listener que dispare una funcion cada
+        //vez que nos llegue un chunk para poder procesar su informacions
+        const body=[];
+        req.on('data', (chunk)=>{
+            console.log(chunk);
+            //agregamos todos los chunks al body
+            body.push(chunk);
+        });
+        req.on('end', ()=>{
+            // una vez termina de llegar el request
+            // unimos todas las partes de chunk 
+            const parsedBody= Buffer.concat(body).toString();
+            const message = parsedBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
+        });
+
+         
+        // el codigo 302 es cuando hacemos redirecciones
+        res.statusCode= 302;
+        res.setHeader('Location','/');
+        return res.end();
+    }
     res.setHeader('Content-Type', 'text/html')
-    res.write('Hola');
+    res.write('<html>');
+    res.write('<head><title>Mi pagina</title></head>');
+    res.write('<body>Hola</body>')
+    res.write('</html>');
 
     // con esto deimos que ya no escribimos en la respuesta
     // y lo que escribimos se manda al cliente
     res.end();
+    
 });
 
 // server.listen() empieza el proceso que hace que nodejs
