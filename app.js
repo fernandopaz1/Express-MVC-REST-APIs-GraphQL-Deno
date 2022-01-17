@@ -20,7 +20,15 @@ const http = require('http');
 // que debemos guardar en una variable
 
 const server = http.createServer((req, res)=>{
-    console.log(req)
+    console.log(req.url, req.method, req.headers)
+
+    // Podemos setear a tipo content y que retorne un html
+    res.setHeader('Content-Type', 'text/html')
+    res.write('Hola');
+
+    // con esto deimos que ya no escribimos en la respuesta
+    // y lo que escribimos se manda al cliente
+    res.end();
 });
 
 // server.listen() empieza el proceso que hace que nodejs
