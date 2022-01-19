@@ -52,19 +52,35 @@ const server = http.createServer((req, res)=>{
             //agregamos todos los chunks al body
             body.push(chunk);
         });
-        req.on('end', ()=>{
+        // hago return porque quiero que se registre el eventListener
+        // pero no quiero que se ejecute el codigo que le siguie
+        return req.on('end', ()=>{
             // una vez termina de llegar el request
             // unimos todas las partes de chunk 
             const parsedBody= Buffer.concat(body).toString();
             const message = parsedBody.split('=')[1];
-            fs.writeFileSync('message.txt', message);
+
+            // Escribir archivos con writeFileSync lo hace de forma sincronica
+            // Es decir bloquea el codigo hasta que se cree la fila y se escriba su contendido
+            // Eso significa que la suguiente linea de este callback no se ejecuta hasta que termina
+            // si entran nuevos request tampoco van a ser procesados hasta que termina el actual callback
+
+            // la idea es usar el eventLoop sin bloquearlo para que el server este siempre disponible
+            // dispatcheamos los errores y volvemos a procesarlos cuando estan listos
+            // siempre enviamos las respuestas o siguientes acciones dentro de callbacks
+            // no es codigo que se ejecuta ahora sino en el futuro cuando la operacion termina
+
+            fs.writeFile('message.txt', message, (err)=>{
+                // el codigo 302 es cuando hacemos redirecciones
+                res.statusCode= 302;
+                res.setHeader('Location','/');
+                return res.end();
+            });
+           
         });
 
          
-        // el codigo 302 es cuando hacemos redirecciones
-        res.statusCode= 302;
-        res.setHeader('Location','/');
-        return res.end();
+      
     }
     res.setHeader('Content-Type', 'text/html')
     res.write('<html>');
