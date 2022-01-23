@@ -10,7 +10,7 @@ const requestHandler = (req,res)=>{
         res.setHeader('Content-Type', 'text/html')
         res.write('<html>');
         res.write('<head><title>Enter Message</title></head>');
-        res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submint">Submit</button></form></body>')
+        res.write('<body><form action="/message" method="POST"><input type="text" name="message"><button type="submit">Submit</button></form></body>')
         res.write('</html>');
     
         // con esto deimos que ya no escribimos en la respuesta
