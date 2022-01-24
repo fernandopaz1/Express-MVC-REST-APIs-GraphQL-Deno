@@ -2,7 +2,9 @@
 
 Este es un proyecto parte de un [curso de udemy](https://www.udemy.com/course/nodejs-the-complete-guide/) sobre nodejs.
 
-Acá cubro la parte básica que es como montar un backend sin librerias para comprender cada parte por separado.
+## Indice de código
+1. Node básico [[código](https://github.com/fernandopaz1/node-basics/tree/e6af06c61eaa2f41a1a341247516fdd962f1c88a)]: &nbsp; aca levanto un server sin usar framework. 
+2. Express básico [próximamente]
 
 
 ## Event loop [[fuente](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/)]
