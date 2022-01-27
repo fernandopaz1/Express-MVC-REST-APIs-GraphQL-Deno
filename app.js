@@ -29,7 +29,7 @@ app.use((req, res, next)=>{
 // El valor que retorna la función express resulta ser también
 // un requestHandler valido, por lo que lo podemos pasar como
 // parámetro para la creación del server.
-const server = http.createServer(app);
 
-
-server.listen(3000);
+// app.listen se crea el server pasando this, es decir el request handler
+// y pasa el argumento para indicar que puerto usamos
+app.listen(3000);
