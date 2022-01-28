@@ -1,6 +1,7 @@
 const http = require('http');
 
 const express = require('express');
+const bodyParser = require('body-parser');
 
 // La librería exporta una función que inicia un nuevo objeto
 // que guarda y maneja muchas cosas que antes teníamos que hacer a mano
@@ -10,13 +11,19 @@ const app = express();
 // los midlewares son handlers que se ejecutan entre que llega
 // el pedido y se enviá la respuesta
 // req y res son los mismos de antes, pero next seria la siguiente
-// función a ejecuta, es decir el siguiente midleware.
+// función a ejecuta, es decir el siguiente middleware.
+
+
+// como parsear el body es algo común a todos los middleware
+// lo hacemos al principio sin una ruta en concreto 
+// lo cual aplica para todas las request
+app.use(bodyParser.urlencoded());
 
 // si no planeamos mandarlo al next lo que debemos hacer es mandar un
 // response
 app.use((req, res, next)=>{
     console.log("in the midleware");
-    next(); // llama al siguiente midleware4
+    next(); // llama al siguiente middleware
 })
 
 // si agrego un path lo tengo que poner antes
@@ -30,6 +37,17 @@ app.use('/about',(req, res, next)=>{
     console.log("in the second midleware");
     // res.send() por default setea un header con el tipo correcto
     res.send('<h1>Hola este es el about</h1>'); 
+})
+
+app.use('/add-product', (req, res, next)=>{
+    console.log("Un middleware con post");
+    res.send('<form action="/product" method="POST"><input type="text" name="title"/><button type="submit">Add Product</button></form>'); 
+})
+
+
+app.use('/product', (req, res, next)=>{
+    console.log(req.body)
+    res.redirect('/');
 })
 
 
