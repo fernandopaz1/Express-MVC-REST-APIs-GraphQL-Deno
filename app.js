@@ -7,6 +7,10 @@ const bodyParser = require('body-parser');
 // que guarda y maneja muchas cosas que antes teníamos que hacer a mano
 const app = express();
 
+//importamos las rutas definidas en otros archivos
+const adminRoutes = require('./routes/admin.js');
+const shopRoutes = require('./routes/shop.js');
+
 // El método use permite agregar un midleware
 // los midlewares son handlers que se ejecutan entre que llega
 // el pedido y se enviá la respuesta
@@ -19,45 +23,11 @@ const app = express();
 // lo cual aplica para todas las request
 app.use(bodyParser.urlencoded());
 
-// si no planeamos mandarlo al next lo que debemos hacer es mandar un
-// response
-app.use((req, res, next)=>{
-    console.log("in the midleware");
-    next(); // llama al siguiente middleware
-})
 
-// si agrego un path lo tengo que poner antes
-// esto es porque el primer path que hace match se ejecuta
-// si ejecuto este y envio el html, el siguiente midleware nose ejecuta
-// Pero si pongo un url mas generico como '/' al principio, este siempre
-// machea y nunca lo van a hacer los demas 
-// los midlewares que tienen que ser aplicados a todos los request va 
-// antes que todos los que envian una respuesta
-app.use('/about',(req, res, next)=>{
-    console.log("in the second midleware");
-    // res.send() por default setea un header con el tipo correcto
-    res.send('<h1>Hola este es el about</h1>'); 
-})
+// como los routers son midlewares validos, se pueden usar dentro de app
+app.use(adminRoutes);
+app.use(shopRoutes);
 
-app.use('/add-product', (req, res, next)=>{
-    console.log("Un middleware con post");
-    res.send('<form action="/product" method="POST"><input type="text" name="title"/><button type="submit">Add Product</button></form>'); 
-})
-
-
-app.use('/product', (req, res, next)=>{
-    console.log(req.body)
-    res.redirect('/');
-})
-
-
-// app.use tiene varios overloads para poder usarla de dferentes formas
-// dependiendo de los parametros que usamos
-app.use((req, res, next)=>{
-    console.log("in the second midleware");
-    // res.send() por default setea un header con el tipo correcto
-    res.send('<h1>Hola desde express</h1>'); 
-})
 
 
 // El valor que retorna la función express resulta ser también
@@ -66,4 +36,5 @@ app.use((req, res, next)=>{
 
 // app.listen se crea el server pasando this, es decir el request handler
 // y pasa el argumento para indicar que puerto usamos
+
 app.listen(3000);
