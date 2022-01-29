@@ -2,19 +2,30 @@ const http = require('http');
 
 const path = require('path')
 
+const rootDir = require('./util/path');
+
+
 const express = require('express');
 const bodyParser = require('body-parser');
+
+
 
 // La librería exporta una función que inicia un nuevo objeto
 // que guarda y maneja muchas cosas que antes teníamos que hacer a mano
 const app = express();
 
+
+// si queremos servir archivos estaticos como css
+// tenemos que hacerlo via express
+// cualquier archivo que necesite lo va a buscar a public
+app.use(express.static(path.join(rootDir, 'public')));
+
 //importamos las rutas definidas en otros archivos
 const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 
-// El método use permite agregar un midleware
-// los midlewares son handlers que se ejecutan entre que llega
+// El método use permite agregar un middleware
+// los middlewares son handlers que se ejecutan entre que llega
 // el pedido y se enviá la respuesta
 // req y res son los mismos de antes, pero next seria la siguiente
 // función a ejecuta, es decir el siguiente middleware.
@@ -34,7 +45,7 @@ app.use(shopRoutes);
 // es atraparlo con el middleware mas general, es decir sin url
 // status es un metodo que se puede encadenar y setea el status
 app.use((req,res, next)=>{
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
 })
 
 

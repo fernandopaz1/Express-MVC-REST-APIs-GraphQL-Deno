@@ -4,6 +4,8 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 
+const rootDir = require('../util/path');
+
 
 // si no planeamos mandarlo al next lo que debemos hacer es mandar un
 // response
@@ -33,7 +35,7 @@ router.get('/',(req, res, next)=>{
     // absoluto del proyecto con el path relativos del archivo
     // no usamos las / aca porque crea el path de forma que funcione 
     // tanto en windows como linux
-    res.sendFile(path.join(__dirname, '../', 'views','shop.html')); 
+    res.sendFile(path.join(rootDir, 'views','shop.html')); 
 })
 
 module.exports = router
