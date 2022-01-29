@@ -6,7 +6,7 @@ const router = express.Router();
 
 // si no planeamos mandarlo al next lo que debemos hacer es mandar un
 // response
-router.use((req, res, next)=>{
+router.get((req, res, next)=>{
     console.log("in the midleware");
     next(); // llama al siguiente middleware
 })
@@ -18,7 +18,7 @@ router.use((req, res, next)=>{
 // machea y nunca lo van a hacer los demas 
 // los midlewares que tienen que ser aplicados a todos los request va 
 // antes que todos los que envian una respuesta
-router.use('/about',(req, res, next)=>{
+router.get('/about',(req, res, next)=>{
     console.log("in the second midleware");
     // res.send() por default setea un header con el tipo correcto
     res.send('<h1>Hola este es el about</h1>'); 
@@ -28,7 +28,7 @@ router.use('/about',(req, res, next)=>{
 
 // app.use tiene varios overloads para poder usarla de dferentes formas
 // dependiendo de los parametros que usamos
-router.use((req, res, next)=>{
+router.get('/',(req, res, next)=>{
     console.log("in the second midleware");
     // res.send() por default setea un header con el tipo correcto
     res.send('<h1>Hola desde express</h1>'); 

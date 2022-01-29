@@ -28,6 +28,12 @@ app.use(bodyParser.urlencoded());
 app.use(adminRoutes);
 app.use(shopRoutes);
 
+// si ningun middleware atiende la llamada lo que podemos hacer
+// es atraparlo con el middleware mas general, es decir sin url
+// status es un metodo que se puede encadenar y setea el status
+app.use((req,res, next)=>{
+    res.status(404).send('<h1>Page not found</h1>');
+})
 
 
 // El valor que retorna la función express resulta ser también
