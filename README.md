@@ -3,8 +3,8 @@
 Este es un proyecto parte de un [curso de udemy](https://www.udemy.com/course/nodejs-the-complete-guide/) sobre nodejs.
 
 ## Indice de código
-1. Node básico [[código](https://github.com/fernandopaz1/node-basics/tree/e6af06c61eaa2f41a1a341247516fdd962f1c88a)]: &nbsp; aca levanto un server sin usar framework. 
-2. Express básico [próximamente]
+1. Node básico [[código](https://github.com/fernandopaz1/Express-MVC-REST-APIs-GraphQL-Deno/tree/e6af06c61eaa2f41a1a341247516fdd962f1c88a)]: &nbsp; aca levanto un server sin usar framework. 
+2. Express básico [[código](https://github.com/fernandopaz1/Express-MVC-REST-APIs-GraphQL-Deno/tree/7abaea459258fbfabb3781df5b21def909e61e20)]: &nbsp; levantando una app similar a la del primer paso pero usando express. 
 
 
 ## Event loop [[fuente](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/)]
