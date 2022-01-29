@@ -1,4 +1,6 @@
 // aca van las rutas relacionadas a la administracion del sitio
+const path = require('path')
+
 const express = require('express')
 
 // router es similar a app, solo que le registramos aca los handlers
@@ -9,13 +11,11 @@ const router = express.Router();
 // app.post se dispara solo cuando la llamada es un post
 // app.use se dispara en ambos casos
 router.get('/add-product', (req, res, next)=>{
-    console.log("Un middleware con post");
-    res.send('<form action="/product" method="POST"><input type="text" name="title"/><button type="submit">Add Product</button></form>'); 
+    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html')); 
 })
 
 
-router.post('/product', (req, res, next)=>{
-    console.log(req.body)
+router.post('/add-product', (req, res, next)=>{
     res.redirect('/');
 })
 

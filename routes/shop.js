@@ -1,13 +1,13 @@
 // aca iría el codigo que maneja lo que ve el usario
+const path = require('path');
 
-const express = require('express')
+const express = require('express');
 const router = express.Router();
 
 
 // si no planeamos mandarlo al next lo que debemos hacer es mandar un
 // response
 router.get((req, res, next)=>{
-    console.log("in the midleware");
     next(); // llama al siguiente middleware
 })
 
@@ -19,7 +19,6 @@ router.get((req, res, next)=>{
 // los midlewares que tienen que ser aplicados a todos los request va 
 // antes que todos los que envian una respuesta
 router.get('/about',(req, res, next)=>{
-    console.log("in the second midleware");
     // res.send() por default setea un header con el tipo correcto
     res.send('<h1>Hola este es el about</h1>'); 
 })
@@ -29,9 +28,12 @@ router.get('/about',(req, res, next)=>{
 // app.use tiene varios overloads para poder usarla de dferentes formas
 // dependiendo de los parametros que usamos
 router.get('/',(req, res, next)=>{
-    console.log("in the second midleware");
     // res.send() por default setea un header con el tipo correcto
-    res.send('<h1>Hola desde express</h1>'); 
+    // join une la variable de entorno __dirname que tiene el paht
+    // absoluto del proyecto con el path relativos del archivo
+    // no usamos las / aca porque crea el path de forma que funcione 
+    // tanto en windows como linux
+    res.sendFile(path.join(__dirname, '../', 'views','shop.html')); 
 })
 
 module.exports = router

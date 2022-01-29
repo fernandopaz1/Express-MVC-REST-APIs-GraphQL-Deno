@@ -1,5 +1,7 @@
 const http = require('http');
 
+const path = require('path')
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -25,14 +27,14 @@ app.use(bodyParser.urlencoded());
 
 
 // como los routers son midlewares validos, se pueden usar dentro de app
-app.use(adminRoutes);
+app.use('/admin',adminRoutes);
 app.use(shopRoutes);
 
 // si ningun middleware atiende la llamada lo que podemos hacer
 // es atraparlo con el middleware mas general, es decir sin url
 // status es un metodo que se puede encadenar y setea el status
 app.use((req,res, next)=>{
-    res.status(404).send('<h1>Page not found</h1>');
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 })
 
 
