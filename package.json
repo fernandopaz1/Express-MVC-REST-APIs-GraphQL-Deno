@@ -21,7 +21,8 @@
   },
   "homepage": "https://github.com/fernandopaz1/node-basics#readme",
   "devDependencies": {
-    "nodemon": "2.0.15"
+    "nodemon": "2.0.15",
+    "prettier": "2.5.1"
   },
   "dependencies": {
     "body-parser": "^1.19.1",
