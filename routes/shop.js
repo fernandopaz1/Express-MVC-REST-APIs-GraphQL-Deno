@@ -8,7 +8,7 @@ const router = express.Router();
 const rootDir = require('../util/path');
 
 const adminData = require('./admin');
-const { appendFile } = require('fs');
+const {appendFile} = require('fs');
 
 // si no planeamos mandarlo al next lo que debemos hacer es mandar un
 // response
@@ -40,7 +40,11 @@ router.get('/', (req, res, next) => {
 	// usando template engines no necesitamos construir el path
 	// tampoco la extension ya que definimos el default template engine
 	products = adminData.products;
-	res.render('shop', { prods: products, docTitle: 'Shop' });
+	res.render('shop', {
+		prods: products,
+		pageTitle: 'Shop',
+		path: '/'
+	});
 });
 
 module.exports = router;

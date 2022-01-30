@@ -44,7 +44,8 @@ app.use(shopRoutes);
 // es atraparlo con el middleware mas general, es decir sin url
 // status es un metodo que se puede encadenar y setea el status
 app.use((req, res, next) => {
-	res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
+	res.render('404', {pageTitle: 'Page not found'});
+	// res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
 });
 
 // El valor que retorna la función express resulta ser también

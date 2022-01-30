@@ -15,11 +15,15 @@ const products = [];
 // app.post se dispara solo cuando la llamada es un post
 // app.use se dispara en ambos casos
 router.get('/add-product', (req, res, next) => {
-	res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+	res.render('add-product', {
+		pageTitle: 'Add Product',
+		path: '/admin/add-product'
+	});
+	// res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
 });
 
 router.post('/add-product', (req, res, next) => {
-	products.push({ title: req.body.title });
+	products.push({title: req.body.title});
 	res.redirect('/');
 });
 
