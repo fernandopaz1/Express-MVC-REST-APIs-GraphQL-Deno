@@ -10,6 +10,9 @@ const rootDir = require('../util/path');
 // y exportamos router para que desde afuera se registre a app
 const router = express.Router();
 
+
+const products = [];
+
 // app.get solo se dispara cuando hacemos un get request
 // app.post se dispara solo cuando la llamada es un post
 // app.use se dispara en ambos casos
@@ -19,8 +22,10 @@ router.get('/add-product', (req, res, next)=>{
 
 
 router.post('/add-product', (req, res, next)=>{
+    products.push( {title : req.body.title} )
     res.redirect('/');
 })
 
 
-module.exports = router
+exports.routes = router;
+exports.products = products;

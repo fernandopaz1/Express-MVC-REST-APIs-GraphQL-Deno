@@ -14,6 +14,10 @@ const bodyParser = require('body-parser');
 // que guarda y maneja muchas cosas que antes teníamos que hacer a mano
 const app = express();
 
+// con set podemos setear propiedades en el handler
+// le podemos configurar que use un motor de templates definido 
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
 // si queremos servir archivos estaticos como css
 // tenemos que hacerlo via express
@@ -21,7 +25,7 @@ const app = express();
 app.use(express.static(path.join(rootDir, 'public')));
 
 //importamos las rutas definidas en otros archivos
-const adminRoutes = require('./routes/admin.js');
+const adminData = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 
 // El método use permite agregar un middleware
@@ -38,7 +42,7 @@ app.use(bodyParser.urlencoded());
 
 
 // como los routers son midlewares validos, se pueden usar dentro de app
-app.use('/admin',adminRoutes);
+app.use('/admin',adminData.routes);
 app.use(shopRoutes);
 
 // si ningun middleware atiende la llamada lo que podemos hacer
