@@ -1,4 +1,3 @@
-// aca van las rutas relacionadas a la administracion del sitio
 const path = require('path');
 
 const express = require('express');
@@ -11,9 +10,6 @@ const router = express.Router();
 
 const products = [];
 
-// app.get solo se dispara cuando hacemos un get request
-// app.post se dispara solo cuando la llamada es un post
-// app.use se dispara en ambos casos
 router.get('/add-product', (req, res, next) => {
 	res.render('add-product', {
 		pageTitle: 'Add Product',
