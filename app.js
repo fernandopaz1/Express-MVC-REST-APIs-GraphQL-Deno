@@ -15,6 +15,7 @@ app.set('views', 'views');
 
 app.use(express.static(path.join(rootDir, 'public')));
 
+const errorController = require('./controllers/error');
 //importamos las rutas definidas en otros archivos
 const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
@@ -25,8 +26,6 @@ app.use(bodyParser.urlencoded());
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-	res.render('404', {pageTitle: 'Page not found'});
-});
+app.use(errorController.get404);
 
 app.listen(3000);
