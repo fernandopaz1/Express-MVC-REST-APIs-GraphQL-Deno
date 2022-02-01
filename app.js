@@ -16,13 +16,13 @@ app.set('views', 'views');
 app.use(express.static(path.join(rootDir, 'public')));
 
 //importamos las rutas definidas en otros archivos
-const adminData = require('./routes/admin.js');
+const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 
 app.use(bodyParser.urlencoded());
 
 // como los routers son midlewares validos, se pueden usar dentro de app
-app.use('/admin', adminData.routes);
+app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
 app.use((req, res, next) => {
