@@ -3,7 +3,7 @@ block styles
     link(rel="stylesheet", href="/css/product.css")
 block content
     main 
-        if prods.length > 0
+        if hasProducts > 0
             .grid
                 each product in prods
                     article.card.product-item
