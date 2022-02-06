@@ -2,7 +2,11 @@ const products = [];
 const fs = require('fs');
 const path = require('path');
 
-
+const p = path.join(
+	path.dirname(require.main.filename),
+	'data',
+	'products.json'
+);
 
 
 module.exports = class Products {
@@ -10,13 +14,7 @@ module.exports = class Products {
 		this.title = title;
 	}
 
-	save() {
-		const p = path.join(
-			path.dirname(require.main.filename),
-			'data',
-			'products.json'
-		);
-		console.log(p);
+	save(){
 		fs.readFile(p, (err, fileContent)=> {
 			let products = [];
 			if(!err) {
@@ -30,20 +28,16 @@ module.exports = class Products {
 
 	}
 
-	static fetchAll() {
-	// 	const p = path.join(
-	// 		path.dirname(require.main.filename),
-	// 		'data',
-	// 		'products.json'
-	// 	);
-	// 	fs.readFile(p, (err, fileContent)=> {
-	// 		let products = [];
-	// 		if(err) {
-	// 			return [];	
-	// 		}
-	// 		return JSON.parse(fileContent);
-	// 	});	
-	// 
-	return [];
+	// como esto es codigo asincrono no podemos asumir que cuando pedimos la pagina
+	// se termino de ejecutar la funcion. Para eso pasamos un callback
+	// dentro del callback lo que hacemos es renderizar la pagina dependiendo del lo que le pasamos
+	// es decir producst
+	static fetchAll(cb) {
+	 	fs.readFile(p, (err, fileContent)=> {
+			if(err) {
+				cb([]);	
+			}
+			return cb(JSON.parse(fileContent));
+		});
 	}
 };

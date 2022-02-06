@@ -13,7 +13,6 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', 'views');
 
-app.use(express.static(path.join(rootDir, 'public')));
 
 const errorController = require('./controllers/error');
 //importamos las rutas definidas en otros archivos
@@ -21,6 +20,8 @@ const adminRoutes = require('./routes/admin.js');
 const shopRoutes = require('./routes/shop.js');
 
 app.use(bodyParser.urlencoded());
+// carga los archivos estaticos como css y js
+app.use(express.static(path.join(rootDir, 'public')));
 
 // como los routers son midlewares validos, se pueden usar dentro de app
 app.use('/admin', adminRoutes);
