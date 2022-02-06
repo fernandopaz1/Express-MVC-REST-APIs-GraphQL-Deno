@@ -8,6 +8,17 @@ const p = path.join(
 	'products.json'
 );
 
+const getProductsFromFile = (cb) => {
+	fs.readFile(p, (err, fileContent)=> {
+		if(err) {
+			cb([]);	
+		}else{
+			cb(JSON.parse(fileContent));
+		}
+	});
+}
+
+
 
 module.exports = class Products {
 	constructor(title) {
@@ -15,29 +26,21 @@ module.exports = class Products {
 	}
 
 	save(){
-		fs.readFile(p, (err, fileContent)=> {
-			let products = [];
-			if(!err) {
-				products = JSON.parse(fileContent);
-			}
+		// aca usamos una función que obtiene el array de productos
+		// y ejecuta el callback sobre ese array.
+		getProductsFromFile(products => {
 			products.push(this);
-			fs.writeFile(p, JSON.stringify(products), (err)=>{
+			fs.writeFile(p, JSON.stringify(products), err=>{
 				console.log(err);
 			});
 		});
-
 	}
 
-	// como esto es codigo asincrono no podemos asumir que cuando pedimos la pagina
-	// se termino de ejecutar la funcion. Para eso pasamos un callback
+	// como esto es código asíncrono no podemos asumir que cuando pedimos la pagina
+	// se termino de ejecutar la función. Para eso pasamos un callback
 	// dentro del callback lo que hacemos es renderizar la pagina dependiendo del lo que le pasamos
-	// es decir producst
+	// es decir products
 	static fetchAll(cb) {
-	 	fs.readFile(p, (err, fileContent)=> {
-			if(err) {
-				cb([]);	
-			}
-			return cb(JSON.parse(fileContent));
-		});
+	 	getProductsFromFile(cb);
 	}
 };
