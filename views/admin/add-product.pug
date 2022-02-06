@@ -6,6 +6,15 @@ block content
     main
         form.product-form(action="/admin/add-product", method="POST")
             .form-control
-                label Title
-                input(name="title", id="title")
-                button.btn.submit Add Product
+                label(for="title") Title
+                input(name="title",type="text", id="title")
+            .form-control
+                label(for="imageUrl") Image Url
+                input(name="imageUrl", id="imageUrl")
+            .form-control
+                label(for="price") Price
+                input(name="price", type="number", id="price")
+            .form-control
+                label(for="description") Description
+                textarea(name="description", type="text", rows="5", id="description")
+            button.btn.submit Add Product
