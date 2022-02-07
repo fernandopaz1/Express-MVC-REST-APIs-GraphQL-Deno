@@ -3,4 +3,21 @@ block styles
     link(rel="stylesheet", href="/css/product.css")
 block content
     main 
-        h1.product__title No products in the cart
+        if hasProducts > 0
+            .grid
+                each product in prods
+                    article.card.product-item
+                        header.card__header 
+                            h1.product__title #{product.title} 
+                        div.card__image 
+                            img(src=product.imageUrl , alt="A Book")
+                        div.card__content 
+                            h2.product__price #{product.price}
+                            p.product__description #{product.description}
+                        div.card__actions
+                            a.btn(href=`/products/${product.id}`) Details
+                            form(action="/cart" method="POST")
+                                button.btn Add to Cart
+                                input(type="hidden" name="productId" value=product.productId)
+        else 
+            h1.product__title There is no products in the cart

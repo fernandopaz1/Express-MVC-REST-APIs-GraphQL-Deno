@@ -1,5 +1,5 @@
 const Product = require('../models/products');
-
+const Cart = require('../models/cart');
 
 exports.getHome = (req, res, next) => {
 	res.render('./shop/index', {
@@ -8,11 +8,19 @@ exports.getHome = (req, res, next) => {
 	});
 };
 
+exports.postCart = (req, res, next) => {
+	const prodId = req.body.productId;
+	Product.findById(prodId, (product) => {
+		Cart.addProduct(prodId, product.price);
+	});
+	res.redirect('/cart');
+};
+
 exports.getCart = (req, res, next) => {
-	Product.fetchAll((products)=> {
+	Cart.fetchCart((cart) => {
 		res.render('./shop/cart', {
-			prods: products,
-			hasProducts: products?.length>0,
+			prods: cart.products,
+			hasProducts: cart.products.length > 0,
 			pageTitle: 'Your Cart',
 			path: '/cart'
 		});
@@ -20,10 +28,10 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.getOrders = (req, res, next) => {
-	Product.fetchAll((products)=> {
+	Product.fetchAll((products) => {
 		res.render('./shop/orders', {
 			prods: products,
-			hasProducts: products?.length>0,
+			hasProducts: products?.length > 0,
 			pageTitle: 'Your orders',
 			path: '/orders'
 		});
@@ -31,10 +39,10 @@ exports.getOrders = (req, res, next) => {
 };
 
 exports.getCheckout = (req, res, next) => {
-	Product.fetchAll((products)=> {
+	Product.fetchAll((products) => {
 		res.render('./shop/checkout', {
 			prods: products,
-			hasProducts: products?.length>0,
+			hasProducts: products?.length > 0,
 			pageTitle: 'Checkout',
 			path: '/checkout'
 		});

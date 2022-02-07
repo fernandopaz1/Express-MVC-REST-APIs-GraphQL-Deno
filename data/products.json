@@ -1,1 +1,16 @@
-[{"title":"Hola","imageUrl":"https://as2.ftcdn.net/v2/jpg/03/52/82/79/1000_F_352827963_o9ODYzxeKczlZWKaFBsPLOQ4b6f6P533.jpg","description":"Libro, oihaosdifa","price":"1250"}]
+[
+	{
+		"title": "Libro",
+		"imageUrl": "https://as2.ftcdn.net/v2/jpg/03/52/82/79/1000_F_352827963_o9ODYzxeKczlZWKaFBsPLOQ4b6f6P533.jpg",
+		"description": "Este es un libro de prueba",
+		"price": "19",
+		"id": "0.5907041910459916"
+	},
+	{
+		"title": "asdasd",
+		"imageUrl": "https://www.magisnet.com/wp-content/uploads/2020/05/pagina4libros.jpg",
+		"description": "asdfgasdf",
+		"price": "121",
+		"id": "0.6602086621664307"
+	}
+]
