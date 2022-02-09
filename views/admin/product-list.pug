@@ -1,6 +1,7 @@
 extends ../layouts/main-layout.pug
 block styles
     link(rel="stylesheet", href="/css/product.css")
+    link(rel="stylesheet", href="/css/forms.css")
 block content
     main 
         if hasProducts > 0
@@ -15,7 +16,7 @@ block content
                             h2.product__price #{product.price}
                             p.product__description #{product.description}
                         div.card__actions
-                            a.btn(href="/admin/edit-product") Edit
+                            a.btn(href=`/admin/edit-product/${product.id}?edit=true`) Edit
                             form.card__actions(action="/admin/delete-product" method="DELETE")
                                 button.btn Delete
         else 
