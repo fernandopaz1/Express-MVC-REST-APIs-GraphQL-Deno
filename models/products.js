@@ -51,4 +51,16 @@ module.exports = class Products {
 			cb(product);
 		});
 	}
+
+	static editById(id, cb) {
+		getProductsFromFile((products) => {
+			const prods = products.map((p) => {
+				if (p.id === id) return cb();
+				return p;
+			});
+			fs.writeFile(p, JSON.stringify(prods), (err) => {
+				console.log(err);
+			});
+		});
+	}
 };

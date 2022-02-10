@@ -1,3 +1,4 @@
+const Products = require('../models/products');
 const Product = require('../models/products');
 
 exports.getAddProduct = (req, res, next) => {
@@ -8,10 +9,10 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.getAdminProduct = (req, res, next) => {
-	Product.fetchAll((products)=> {
+	Product.fetchAll((products) => {
 		res.render('./admin/product-list', {
 			prods: products,
-			hasProducts: products?.length>0,
+			hasProducts: products?.length > 0,
 			pageTitle: 'Products',
 			path: '/admin/products'
 		});
@@ -30,16 +31,35 @@ exports.postAddProduct = (req, res, next) => {
 
 exports.getEditProduct = (req, res, next) => {
 	const editMode = req.query.edit;
-	if(!editMode){
+	if (!editMode) {
 		res.redirect('/');
 	}
-	const id=req.params.productId;
-	Product.findById(id,(product)=> {
+	const id = req.params.productId;
+	Product.findById(id, (product) => {
 		res.render('./admin/add-product-edit', {
 			product: product,
 			pageTitle: 'Edit Product',
 			path: '/admin/edit-product',
 			editing: editMode
 		});
+	});
+};
+
+exports.postEditProduct = (req, res, next) => {
+	// if (!editMode) {
+	// 	res.redirect('/');
+	// }
+
+	const body = req.body;
+	const id = req.params.productId;
+	Product.editById(id, () => {
+		const edited = new Products(
+			body.title,
+			body.imageUrl,
+			body.description,
+			body.price
+		);
+		edited.id = id;
+		return edited;
 	});
 };
