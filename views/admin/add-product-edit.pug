@@ -4,7 +4,7 @@ block styles
     link(rel="stylesheet", href="/css/forms.css")
 block content
     main 
-        form.product-form(action="/admin/add-product", method="POST")
+        form.product-form(action=`/edit-product/${product.id}`, method="POST")
             .form-control
                 label(for="title") Title
                 input(name="title",type="text", id="title", value=product.title)
