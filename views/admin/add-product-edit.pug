@@ -16,5 +16,5 @@ block content
                 input(name="price", type="number", id="price", value=product.price)
             .form-control
                 label(for="description") Description
-                textarea(name="description", type="text", rows="5", id="description", value=product.description)
+                textarea(name="description", type="text", rows="5", id="description") #{product.description}
             button.btn.submit Save Product
